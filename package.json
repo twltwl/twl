@@ -5,7 +5,7 @@
   "main": "./src/twl.js",
   "repository": {
     "type": "git",
-    "url": "http://..."
+    "url": "https://github.com/twltwl/twl"
   },
   "scripts": {},
   "bin": {
@@ -22,6 +22,5 @@
     "request": "^2.79.0",
     "streamsearch": "^0.1.2",
     "tar-fs": "^1.14.0"
-  },
-  "private": true
+  }
 }
