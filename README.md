@@ -1,5 +1,5 @@
 # TWL Deploy
-  Deploy your project easily via HTTP
+  Deploy your project via HTTP
 
   **0.0.1 alpha**
 
@@ -14,11 +14,11 @@
 
   //Add project
   //twl add "my-project" "/var/www/my-project"
-  twl add [project-name] [project-dir]
+  twl add -n [project-name] -p [project-dir]
 
   //Start twl server
   //twl start 4711
-  twl start [port]
+  twl start -p [port]
 
   //get token
   twl -t
