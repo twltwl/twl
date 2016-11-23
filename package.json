@@ -1,0 +1,27 @@
+{
+  "name": "twl",
+  "version": "0.0.1",
+  "description": "HTTP deploy system",
+  "main": "./src/twl.js",
+  "repository": {
+    "type": "git",
+    "url": "http://..."
+  },
+  "scripts": {},
+  "bin": {
+    "twl": "./src/twl.js"
+  },
+  "author": "Tommy Ljungberg <to.ljungberg@gmail.com> (https://github.com/twltwl)",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "connect-busboy": "0.0.2",
+    "express": "^4.14.0",
+    "fs-extra": "^1.0.0",
+    "promise": "^7.1.1",
+    "request": "^2.79.0",
+    "streamsearch": "^0.1.2",
+    "tar-fs": "^1.14.0"
+  },
+  "private": true
+}
