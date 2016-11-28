@@ -7,6 +7,7 @@ var tar = require('tar-fs')
 var fs = require('fs')
 var request = require('request')
 var Promise = require('promise');
+var exec = require('child_process').exec;
 
 function getFilename (config) {
   return path.join(process.cwd(), config.name + '-artifact.tar')
@@ -25,22 +26,23 @@ function createArtifact (config) {
 
 function send(config) {
   return new Promise(function (resolve, reject) {
-    var req = request.post(config.url + '/deploy/' + config.token + '/' + config.name, function (err, resp, body) {
-      if (err) {
-        console.log('Error deploying', err);
-        reject()
-      } else {
-        console.log('Success');
+
+    var cmd = 'curl -i -F filedata=@' + getFilename(config) + ' ' + config.url + '/deploy/' + config.token + '/' + config.name
+    exec(cmd, function(error, stdout, stderr) {
+      console.log(stderr)
+      if(!error){
         resolve(config)
+      } else {
+        reject()
       }
-    })
-    var form = req.form()
-    form.append('file', fs.createReadStream(getFilename(config)))
+    });
+
   })
 }
 
 function remove(config){
   fs.unlinkSync(getFilename(config));
+  console.log('Deploy complete')
 }
 
 module.exports = {
