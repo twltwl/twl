@@ -2,3 +2,4 @@ node_modules
 .temp
 .vscode
 twl.config.json
+npm-debug.log
