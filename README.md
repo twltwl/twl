@@ -1,7 +1,7 @@
 # TWL Deploy
   Deploy your project from anywhere
 
-  **0.0.3 alpha**
+  **0.0.4 alpha**
 
 ## Usage server
 ``` js

@@ -10,7 +10,7 @@ var twl = require('commander');
 var args = process.argv.slice(2);
 
 twl
-  .version('0.0.3')
+  .version('0.0.4')
   .option('-t, --token', 'get token')
 
 twl
