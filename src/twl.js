@@ -2,6 +2,9 @@
 
 'use strict';
 
+/* silent install */
+require('./setup.js')
+
 /**
  * TWL Argument wrapper
  */
@@ -12,11 +15,6 @@ var args = process.argv.slice(2);
 twl
   .version('0.0.4')
   .option('-t, --token', 'get token')
-
-twl
-  .command('install [install]')
-  .description('install twl server')
-  .action(install)
 
 twl
   .command('start [start]')
@@ -44,11 +42,6 @@ twl
   })
 
 twl.parse(process.argv);
-
-
-function install() {
-  require('./setup.js')
-}
 
 function start(port) {
   port = port || 4711
