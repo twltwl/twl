@@ -1,6 +1,6 @@
 {
   "name": "twl",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "HTTP deploy system",
   "main": "./src/twl.js",
   "repository": {
