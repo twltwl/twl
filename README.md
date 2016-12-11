@@ -8,10 +8,6 @@
   //install twl npm package
   npm i -g twl
 
-  //Install twl server
-  //Outputs deploy token
-  twl install
-
   //Add project
   //twl add "my-project" "/var/www/my-project"
   twl add -n [project-name] -p [project-dir]
