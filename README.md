@@ -1,6 +1,8 @@
 # TWL Deploy
   Simple CLI deploy tool
+
   Runs a express webserver on your server that listens to incoming cURL requests.
+
   Simply copy your deploy token to your local project and create a config.json file.
 
   **0.0.5**
