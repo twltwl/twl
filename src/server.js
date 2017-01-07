@@ -5,12 +5,18 @@
 var express = require('express')
 var fs = require('fs-extra')
 var app = express()
-var busboy = require("connect-busboy");
+var busboy = require("connect-busboy")
 var config = require('../twl.config.json')
 var tar = require('tar-fs')
 var path = require('path')
+var Promise = require('promise')
 
 app.use(busboy());
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('500 Internal server error!')
+})
 
 app.post('/deploy/:token/:project', function(req, res) {
     if(req.params.token !== config.token){
@@ -20,10 +26,13 @@ app.post('/deploy/:token/:project', function(req, res) {
     } else {
       var project = config.projects[req.params.project]
       req.pipe(req.busboy)
-
+      
       req.busboy.on('file', function(fieldname, file, filename) {
         if(filename.match(/^.*\.tar$/)){
           saveFile(file, filename, project)
+          .then(clearDir)
+          .then(moveFile)
+          .then(deleteTmpfile)
           res.send('Deploy successful')
         } else {
           res.send('Wrong file format')
@@ -33,28 +42,37 @@ app.post('/deploy/:token/:project', function(req, res) {
     }
 });
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send('500 Internal server error!')
-})
-
-function saveFile(file, filename, project){
-  var _file = path.join(path.join(__dirname, '../.temp/' + Date.now() + '-' + filename));
-  var fstream = fs.createWriteStream(_file); 
-  file.pipe(fstream);
-  fstream.on('close', function () {
-      moveFile(_file, project)
-  });
+function saveFile(file, filename, project) {
+  return new Promise(function (resolve, reject) {
+    var _file = path.join(__dirname, '../.temp/' + Date.now() + '-' + filename);
+    var fstream = fs.createWriteStream(_file); 
+    file.pipe(fstream);
+    fstream.on('close', function () {
+        resolve({file: _file, project: project})
+    });
+  })
 }
 
-function moveFile(file, project){
-  fs.emptyDirSync(project.path)
-  fs.createReadStream(file).pipe(tar.extract(project.path, {dmode: '0555', fmode : '0444'}))
-  deleteFile(file)
+function clearDir(args){
+  return new Promise(function (resolve, reject) {
+    fs.emptyDir(args.project.path, function(e){ 
+      resolve(args) 
+    })
+  })
 }
 
-function deleteFile(file) {
-  fs.unlinkSync(file);
+
+function moveFile(args){
+  return new Promise(function (resolve, reject) {
+    fs.createReadStream(args.file).pipe(tar.extract(args.project.path, {dmode: '0555', fmode : '0444'}))
+    resolve(args.file)
+  })
+}
+
+function deleteTmpfile(file) {
+  return new Promise(function (resolve, reject) {
+    fs.unlink(file, resolve);
+  })
 }
 
 module.exports = {
