@@ -30,9 +30,11 @@ function send(config) {
     var cmd = 'curl -i -F filedata=@' + getFilename(config) + ' ' + config.url + '/deploy/' + config.token + '/' + config.name
     exec(cmd, function(error, stdout, stderr) {
       console.log(stderr)
+      console.log(stdout)
       if(!error){
         resolve(config)
       } else {
+        remove(config)
         reject()
       }
     });

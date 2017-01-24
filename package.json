@@ -22,5 +22,9 @@
     "request": "^2.79.0",
     "streamsearch": "^0.1.2",
     "tar-fs": "^1.14.0"
+  },
+  "devDependencies": {
+    "cluster": "^0.7.7",
+    "domain": "0.0.1"
   }
 }
