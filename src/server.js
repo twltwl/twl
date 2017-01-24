@@ -11,7 +11,6 @@ var path = require('path')
 var Promise = require('promise')
 var cluster = require('cluster')
 
-
 function startWebserver(port) {
   var app = express()
 
@@ -46,7 +45,7 @@ function startWebserver(port) {
   })
 
   app.listen(port, function () {
-    console.log('Deploy server running on port :' + port + '\ndeploy token : ' + config.token)
+    console.log('Deploy worker running on port :' + port + '\ndeploy token : ' + config.token)
   })
 }
 
@@ -68,7 +67,6 @@ function clearDir(args) {
     })
   })
 }
-
 
 function moveFile(args) {
   return new Promise(function (resolve, reject) {

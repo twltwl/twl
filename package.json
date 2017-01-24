@@ -21,9 +21,7 @@
     "promise": "^7.1.1",
     "request": "^2.79.0",
     "streamsearch": "^0.1.2",
-    "tar-fs": "^1.14.0"
-  },
-  "devDependencies": {
+    "tar-fs": "^1.14.0",
     "cluster": "^0.7.7",
     "domain": "0.0.1"
   }
