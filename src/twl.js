@@ -41,6 +41,15 @@ twl
     deploy(options.config)
   })
 
+twl
+  .command('rollback [rollback]')
+  .description('Rollback to last deploy')
+  .option('-n, --name <name>', 'Project to rollback')
+  .action(function(cmd, options){
+    rollback(options.config)
+  })
+
+
 twl.parse(process.argv);
 
 function start(port) {
@@ -67,6 +76,11 @@ function deploy(config) {
     var client = require('./client.js')
     client.deploy(config)
   }
+}
+
+function rollback(project) {
+  var serverUtils = require('./serverutils.js')
+  serverUtils.rollback(project)
 }
 
 if(twl.token){
