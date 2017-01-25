@@ -62,7 +62,7 @@ function rotate(args) {
             rotateActive()
           })
         } else {
-          _resolve()
+          rotateActive()
         }
       })
 
