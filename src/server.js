@@ -99,7 +99,7 @@ function saveFile(file, filename, project) {
     var fstream = fs.createWriteStream(_file);
     file.pipe(fstream);
     fstream.on('close', function () {
-      resolve({ file: _file, project: project, filename: filename })
+      resolve({ project: project, filename: filename })
     });
   })
 }
@@ -114,7 +114,8 @@ function clearDir(args) {
 
 function moveFile(args) {
   return new Promise(function (resolve, reject) {
-    fs.createReadStream(args.file).pipe(tar.extract(args.project.path, { dmode: '0555', fmode: '0444' }))
+    var fileToMove = path.join(__dirname, '../.temp/' + args.filename + '.active');
+    fs.createReadStream(fileToMove).pipe(tar.extract(args.project.path, { dmode: '0555', fmode: '0444' }))
     resolve()
   })
 }
