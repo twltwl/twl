@@ -7,14 +7,14 @@ var path = require('path')
 var fs = require('fs-extra')
 var tar = require('tar-fs')
 
-function checkBackup(project) {
+function checkBackup(project, name) {
   return new Promise(function (resolve, reject) {
-    var backup = path.join(__dirname, '../.temp/', project.name, '.tar.backup')
+    var backup = path.join(__dirname, '../.temp/', name, '.tar.backup')
     path.exists(backup, function (exists) {
       if (exists) {
         resolve({ project: project, backup: backup })
       } else {
-        console.log('Could not find a backup file')
+        console.log('Could not find a backup file!')
         reject()
       }
     })
@@ -37,13 +37,13 @@ function restore(aergs) {
   fs.createReadStream(args.backup).pipe(tar.extract(args.project.path, { dmode: '0555', fmode: '0444' }))
 }
 
-function _rollback(name) {
+function rollback(name) {
   var project = config.projects[name]
   if (!project) {
     console.log('Invalid project')
   } else {
-    checkBackup(project)
-      .then(cleanDir)
+    checkBackup(project, name)
+      .then(clearDir)
       .then(restore)
   }
 }
