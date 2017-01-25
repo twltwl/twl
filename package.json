@@ -1,7 +1,7 @@
 {
   "name": "twl",
   "version": "0.1.0",
-  "description": "HTTP deploy system",
+  "description": "Simple CLI deploy tool",
   "main": "./src/twl.js",
   "repository": {
     "type": "git",
