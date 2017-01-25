@@ -80,12 +80,6 @@ function rotate(args) {
 
       function rotateTemp() {
         fs.rename(temp, active, function () {
-          deleteTemp()
-        })
-      }
-
-      function deleteTemp() {
-        fs.unlink(temp, function () {
           resolve(args)
         })
       }
