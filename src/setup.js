@@ -8,15 +8,17 @@ var path = require('path')
 
 var dir = path.resolve(__dirname, '..', '.temp')
 
-if (!fs.existsSync(dir)){
+if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
 
-if (!fs.existsSync('./twl.config.json')) {
+var confDir = path.join(__dirname, '../' + 'twl.config.json')
+
+if (!fs.existsSync(confDir)) {
     var token = crypto.randomBytes(32).toString('hex');
     var defaultConf = {
         token: token,
         projects: {}
     }
-    fs.writeFileSync(path.join(__dirname, '../' + 'twl.config.json'), JSON.stringify(defaultConf))
+    fs.writeFileSync(confDir, JSON.stringify(defaultConf))
 }
