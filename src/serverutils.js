@@ -7,20 +7,9 @@ var path = require('path')
 var fs = require('fs-extra')
 var tar = require('tar-fs')
 
-function rollback(name) {
-  var project = config.projects[name]
-  if (!project) {
-    console.log('Invalid project')
-  } else {
-    checkBackup()
-      .then(cleanDir)
-      .then(restore)
-  }
-}
-
 function checkBackup(project) {
   return new Promise(function (resolve, reject) {
-    var backup = path.join(__dirname, '../.temp/', project.name, '-artifact.tar.backup')
+    var backup = path.join(__dirname, '../.temp/', project.name, '.tar.backup')
     path.exists(backup, function (exists) {
       if (exists) {
         resolve({ project: project, backup: backup })
@@ -40,13 +29,23 @@ function clearDir(args) {
       } else {
         reject()
       }
-
     })
   })
 }
 
 function restore(aergs) {
   fs.createReadStream(args.backup).pipe(tar.extract(args.project.path, { dmode: '0555', fmode: '0444' }))
+}
+
+function _rollback(name) {
+  var project = config.projects[name]
+  if (!project) {
+    console.log('Invalid project')
+  } else {
+    checkBackup(project)
+      .then(cleanDir)
+      .then(restore)
+  }
 }
 
 module.exports = {
