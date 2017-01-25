@@ -52,9 +52,9 @@ function startWebserver(port) {
 function rotate(args) {
   return new Promise(function (resolve, reject) {
     try {
-      var backup = path.join(__dirname, '../.temp/' + filename + '.backup');
-      var active = path.join(__dirname, '../.temp/' + filename + '.active');
-      var temp = path.join(__dirname, '../.temp/' + filename + '.temp');
+      var backup = path.join(__dirname, '../.temp/' + args.filename + '.backup');
+      var active = path.join(__dirname, '../.temp/' + args.filename + '.active');
+      var temp = path.join(__dirname, '../.temp/' + args.filename + '.temp');
 
       fs.stat(backup, function (err, stats) {
         if (!err) {
@@ -86,7 +86,7 @@ function rotate(args) {
 
       function deleteTemp() {
         fs.unlink(temp, function () {
-          resolve()
+          resolve(args)
         })
       }
 
