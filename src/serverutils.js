@@ -9,7 +9,7 @@ var tar = require('tar-fs')
 
 function checkBackup(project, name) {
   return new Promise(function (resolve, reject) {
-    var backup = path.join(__dirname, '../.temp/', name, '.tar.backup')
+    var backup = path.join(__dirname, '../.temp/', name + '.tar.backup')
     path.exists(backup, function (exists) {
       if (exists) {
         resolve({ project: project, backup: backup })
@@ -35,6 +35,7 @@ function clearDir(args) {
 
 function restore(aergs) {
   fs.createReadStream(args.backup).pipe(tar.extract(args.project.path, { dmode: '0555', fmode: '0444' }))
+  console.log('Rollback complete.')
 }
 
 function rollback(name) {
