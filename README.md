@@ -5,7 +5,7 @@
 
   Simply copy your deploy token to your local project and create a config.json file.
 
-  **0.0.5**
+  **0.1.0**
 
 ## Usage server
 ``` js
