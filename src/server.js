@@ -56,16 +56,49 @@ function rotate(args) {
       var active = path.join(__dirname, '../.temp/' + filename + '.active');
       var temp = path.join(__dirname, '../.temp/' + filename + '.temp');
 
-      fs.unlink(backup, function(){
-        fs.rename(active, backup, function(){
-          fs.rename(temp, active, function(){
-            fs.unlink(temp, function(){
-              args.file = active
-              resolve(args)
-            })
+      deleteBackup()
+        .then(rotateActive)
+        .then(rotateTemp)
+        .then(deleteTemp)
+
+      var checkBackup = function () {
+        return new Promise(function (_resolve, _reject) {
+          fs.stat(backup, function (err, stats) {
+            if (!err) {
+              fs.unlink(backup, function () {
+                _resolve()
+              })
+            } else {
+              _resolve()
+            }
           })
         })
-      })
+      }
+
+      var rotateActive = function () {
+        fs.stat(active, function (err, stats) {
+          if (!err) {
+            fs.rename(active, backup, function () {
+              _resolve()
+            })
+          } else {
+            _resolve()
+          }
+        })
+      }
+
+      var rotateTemp = function () {
+        fs.rename(temp, active, function () {
+          _resolve()
+        })
+      }
+
+      var deleteTemp = function () {
+        fs.unlink(temp, function () {
+          _resolve()
+          resolve()
+        })
+      }
     } catch (e) {
       reject()
     }

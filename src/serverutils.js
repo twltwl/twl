@@ -4,6 +4,7 @@
 
 var config = require('../twl.config.json')
 var path = require('path')
+var fs = require('fs-extra')
 var tar = require('tar-fs')
 
 function rollback(name) {
@@ -34,7 +35,12 @@ function checkBackup(project) {
 function clearDir(args) {
   return new Promise(function (resolve, reject) {
     fs.emptyDir(args.project.path, function (e) {
-      resolve(args)
+      if (!e) {
+        resolve(args)
+      } else {
+        reject()
+      }
+
     })
   })
 }
