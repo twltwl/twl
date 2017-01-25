@@ -20,7 +20,7 @@ twl
   .command('start [start]')
   .description('Start twl server')
   .option('-p, --port <port>', 'set port')
-  .action(function(cmd, options){
+  .action(function (cmd, options) {
     start(options.port)
   })
 
@@ -29,7 +29,7 @@ twl
   .description('Add project')
   .option('-n, --name <name>', 'set name')
   .option('-p, --path <path>', 'set path')
-  .action(function(cmd, options){
+  .action(function (cmd, options) {
     add(options.name, options.path)
   })
 
@@ -37,9 +37,18 @@ twl
   .command('deploy [deploy]')
   .description('Deploy project')
   .option('-c, --config <config>', 'set config')
-  .action(function(cmd, options){
+  .action(function (cmd, options) {
     deploy(options.config)
   })
+
+twl
+  .command('rollback [rollback]')
+  .description('Rollback to last deploy')
+  .option('-n, --name <name>', 'Project to rollback')
+  .action(function (cmd, options) {
+    rollback(options.name)
+  })
+
 
 twl.parse(process.argv);
 
@@ -61,7 +70,7 @@ function add(name, path) {
 }
 
 function deploy(config) {
-  if(!config){
+  if (!config) {
     console.log('No config provided')
   } else {
     var client = require('./client.js')
@@ -69,7 +78,12 @@ function deploy(config) {
   }
 }
 
-if(twl.token){
+function rollback(project) {
+  var serverUtils = require('./serverutils.js')
+  serverUtils.rollback(project)
+}
+
+if (twl.token) {
   var server = require('./server.js')
   server.getToken()
 }

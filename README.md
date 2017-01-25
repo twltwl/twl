@@ -22,6 +22,11 @@
 
   //get token
   twl -t
+
+  //Rollback to last deploy
+  //Added in 0.1.0
+  //twl rollback -n test
+  twl rollback -n [name]
 ```
 
 ## Usage client
