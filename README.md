@@ -27,6 +27,9 @@
   //Added in 0.1.0
   //twl rollback -n test
   twl rollback -n [name]
+
+  //List projects
+  twl ls
 ```
 
 ## Usage client
