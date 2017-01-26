@@ -2,7 +2,7 @@
 
 'use strict';
 
-var config = require('../twl.config.json')
+var config = require('../../twl.config.json')
 var path = require('path')
 var fs = require('fs-extra')
 var tar = require('tar-fs')
