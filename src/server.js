@@ -56,17 +56,7 @@ function rotate(args) {
       var active = path.join(__dirname, '../.temp/' + args.filename + '.active');
       var temp = path.join(__dirname, '../.temp/' + args.filename + '.temp');
 
-      fs.stat(backup, function (err, stats) {
-        if (!err) {
-          fs.unlink(backup, function () {
-            rotateActive()
-          })
-        } else {
-          rotateActive()
-        }
-      })
-
-      function rotateActive() {
+      var rotateActive = function () {
         fs.stat(active, function (err, stats) {
           if (!err) {
             fs.rename(active, backup, function () {
@@ -78,11 +68,21 @@ function rotate(args) {
         })
       }
 
-      function rotateTemp() {
+      var rotateTemp = function () {
         fs.rename(temp, active, function () {
           resolve(args)
         })
       }
+
+      fs.stat(backup, function (err, stats) {
+        if (!err) {
+          fs.unlink(backup, function () {
+            rotateActive()
+          })
+        } else {
+          rotateActive()
+        }
+      })
 
     } catch (e) {
       console.log(e)

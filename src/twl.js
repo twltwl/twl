@@ -49,6 +49,14 @@ twl
     rollback(options.name)
   })
 
+twl
+  .command('ls []')
+  .description('List projects')
+  .action(function (cmd, options) {
+    var serverUtils = require('./serverutils.js')
+    serverUtils.list()
+  })
+
 
 twl.parse(process.argv);
 

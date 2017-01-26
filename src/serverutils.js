@@ -49,7 +49,15 @@ function rollback(name) {
   }
 }
 
+function list() {
+  var projects = config['projects']
+  for (var k in projects) {
+    console.log(k, ' : ', projects[k])
+  }
+}
+
 module.exports = {
-  rollback: rollback
+  rollback: rollback,
+  list: list
 }
 
