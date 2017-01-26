@@ -12,7 +12,7 @@ if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
 
-var confDir = path.join(__dirname, '../' + 'twl.config.json')
+var confDir = path.resolve(__dirname, '..', '..', 'twl.config.json')
 
 if (!fs.existsSync(confDir)) {
     var token = crypto.randomBytes(32).toString('hex');
