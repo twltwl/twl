@@ -6,10 +6,11 @@ var config = require('../../twl.config.json')
 var path = require('path')
 var fs = require('fs-extra')
 var tar = require('tar-fs')
+var Promise = require('promise')
 
 function checkBackup(project, name) {
   return new Promise(function (resolve, reject) {
-    var backup = path.join(__dirname, '../.temp/', name + '.tar.backup')
+    var backup = path.join(__dirname, '../.temp/', name + '-artifact.tar.backup')
     fs.stat(backup, function (err, stats) {
       if (!err) {
         resolve({ project: project, backup: backup })
